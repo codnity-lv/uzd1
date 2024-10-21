@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
@@ -7,62 +7,42 @@ import { About } from './components/About';
 import { Contact } from './components/Contact';
 import Bbf from './components/fetch/Bbf';
 
-const Search: React.FC<{ onSearch: (term: string) => void }> = ({ onSearch }) => {
-  const [term, setTerm] = useState('');
-
-  const handleSearch = () => {
-    if (term && term.length > 3) {
-      onSearch(term);
-    }
-  };
-
-  return (
-    <div>
-      <h1>Meklēt</h1>
-      <input
-        type="text"
-        placeholder="Ievadi ko meklēt"
-        value={term}
-        onChange={(e) => setTerm(e.target.value)}
-      />
-      <button onClick={handleSearch}>Search</button>
-    </div>
-  );
-};
-
 const App: React.FC = () => {
-  const [searchTerm, setSearchTerm] = useState('');
-
+  const [loading, setLoading] = useState(false);
+  const [results, setResults] = useState<any[]>([]); // Adjust the type as needed
+/*
   const handleFetch = async (term: string) => {
+    setLoading(true);
     try {
       const response = await fetch("https://noit.pro/cdv/?q=" + encodeURIComponent(term));
       const html = await response.text();
 
       const scriptContent = html;
-
       let res;
       try {
-        res = eval(scriptContent);
-        //console.log( res);
+        res = eval(scriptContent); // Be cautious with using eval
+        setResults(res);
       } catch (e) {
         console.error('Error executing script:', e);
       }
+      console.log('Script execution result:', res);
     } catch (error) {
       console.error('Error fetching page:', error);
+    } finally {
+      setLoading(false);
     }
   };
 
-  const handleSearch = (term: string) => {
-    setSearchTerm(term);
-    handleFetch(term);
-  };
-
+  useEffect(() => {
+    handleFetch("piens"); // Automatically fetch on page load
+  }, []);
+*/
   return (
     <Router>
       <Header />
-      <Search onSearch={handleSearch} />
+      {loading && <div className="loading-overlay">Loading...</div>}
       <Routes>
-        <Route path="/" element={<Bbf term={searchTerm} />} />
+        <Route path="/" element={<Bbf results={results} />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
       </Routes>
