@@ -1,3 +1,10 @@
+# Mazs uzdevums
+[nohostēts te])(https://codinity.noit.pro)
+- Galvene, kājene ir atsevišķi typescript faili
+- satura lapa ar attēliem un tekstiem ir VEIKALS. var rakstīt jebko ko varētu atrast pārtikas veikalā un to arī atgriezīs, ja tas būs, piemēram, maize, piens (demonstrācijas nolūkos tas ir autosearch), gaļa, zivis, milti, augļi utt.
+
+--
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
